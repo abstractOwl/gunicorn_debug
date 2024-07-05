@@ -1,0 +1,24 @@
+services:
+  sample_app:
+    build:
+      context: .
+    ports:
+      - "4000:4000"
+
+  otel-col:
+    image: otel/opentelemetry-collector-contrib
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otelcol-contrib/config.yaml
+    ports:
+      - "4317:4317"
+
+  prometheus:
+    image: prom/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/usr/share/prometheus/console_libraries"
+      - "--web.console.templates=/usr/share/prometheus/consoles"
+      - "--web.enable-remote-write-receiver"
+    ports:
+      - "9090:9090"

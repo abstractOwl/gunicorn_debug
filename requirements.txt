@@ -1,0 +1,5 @@
+Flask
+gunicorn
+opentelemetry-api
+opentelemetry-exporter-otlp
+opentelemetry-sdk
